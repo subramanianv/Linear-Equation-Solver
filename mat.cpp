@@ -20,31 +20,17 @@ Matrix gradient(Matrix A,Matrix x,Matrix b)
 }
 double function_val(Matrix A,Matrix x , Matrix b)
 {
-     Matrix c = 0.5 * x.transpose() * A * x - b * x;
+     Matrix c = 0.5 * x.transpose() * A * x - b.transpose() * x;
 //    cout << c[0][0] ;
     return c[0][0];
 }
-double step(Matrix A,Matrix x,Matrix b)
+double step(Matrix A,Matrix x,Matrix b,Matrix g)
 {
-   Matrix r = b - A*x;
-   Matrix nu = r.transpose() * r ;
-   Matrix de = r.transpose() * A * r;
-  
-   return nu[0][0]/de[0][0];  
+   
+        
    
 }
-/*bool is_same(Matrix x , Matrix  y)
-{
-   for(int i=0;i<x.getDimensions().first;i++)
-   {
-      for(int j=0;j<x.getDimesions().second; j++)
-     {
-       	
-                   if(abs(x[i][j] - y[i][j]) > EPS) return false;
-	}      
-     return true;
-   }
-}*/
+
 int main()
 {
     int n;
@@ -86,14 +72,14 @@ int main()
     double new_norm =s.norm();  
   //  cout<<step(A,x,b);
     cout<<"Calculating";
-    double step_size = step (A,x,b);    
+    double step_size = step (A,x,b,s);    
   while( (old_norm - new_norm)  > EPS)
   {
        
      old_norm = new_norm; 
      x = x - STEP * s;
      s = gradient(A,x,b);
-     step_size = step(A,x,b);
+     step_size = step(A,x,b,s);
      
     // cout<<s;
      new_norm = s.norm(); 
