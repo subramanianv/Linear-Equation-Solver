@@ -27,8 +27,21 @@ double function_val(Matrix A,Matrix x , Matrix b)
 double step(Matrix A,Matrix x,Matrix b,Matrix g)
 {
    
-        
-   
+     double alpha=1.0;
+     double beta = 0.5;
+     double c1 = 1e-4;
+     double func_val = function_val(A,x,b);
+     double func_l = function_val(A,x-alpha*g,b);
+     Matrix gt =(g.transpose()*g); 
+     double dx = gt[0][0];
+//     abort();
+    while(func_l > func_val - c1 * alpha * dx)
+    {
+       alpha = alpha * beta;
+       func_l = function_val(A,x-alpha*g,b);
+       cout<<"Loopingd";
+    }       
+   return alpha;
 }
 
 int main()
@@ -65,27 +78,22 @@ int main()
    if(A.determinant()==0)
    {
      cout<<"No Solution"<<endl;
-     abort();
+     return 1;
   }
-    double old_norm = DBL_MAX;
     Matrix s=gradient(A,x,b);
-    double new_norm =s.norm();  
-  //  cout<<step(A,x,b);
+    double norm =s.norm();  
     cout<<"Calculating";
-    double step_size = step (A,x,b,s);    
-  while( (old_norm - new_norm)  > EPS)
-  {
-       
-     old_norm = new_norm; 
+  //  double step_size = step (A,x,b,s);    
+    while( norm  > EPS)
+   {
+        
      x = x - STEP * s;
      s = gradient(A,x,b);
-     step_size = step(A,x,b,s);
+  //   step_size = step(A,x,b,s);
+     norm = s.norm();
      
-    // cout<<s;
-     new_norm = s.norm(); 
-   //  break;
   }
   cout<<endl<<"Solution";
   cout << x ; 
-   
+  return 0; 
 }
