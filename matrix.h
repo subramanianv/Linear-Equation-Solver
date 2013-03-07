@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<math.h>
 #include<cassert>
 #include<stdio.h>
 using namespace std;
@@ -129,7 +130,14 @@ class Matrix
         }
             return A;
     }
-    
+    double magnitude()
+    {
+        assert(column == 1);
+        double sum =0;
+        for(int i=0;i<row; i++)
+             sum = sum + mat[i][0] * mat[i][0];
+        return sqrt(sum);
+    }
     
     double determinant()
     {
@@ -162,7 +170,7 @@ class Matrix
 	{
 	    sum = sum + mat[i][0]*mat[i][0] ;
          }
-        return sum ;
+        return sqrt(sum) ;
     }
         
 };
