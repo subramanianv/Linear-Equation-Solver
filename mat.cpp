@@ -39,7 +39,7 @@ double step(Matrix A,Matrix x,Matrix b,Matrix g)
     {
        alpha = alpha * beta;
        func_l = function_val(A,x-alpha*g,b);
-       cout<<"Loopingd";
+       //cout<<"Loopingd";
     }       
    return alpha;
 }
